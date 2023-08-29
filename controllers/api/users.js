@@ -50,7 +50,7 @@ async updateUser(req, res) {
 //delete user
 async deleteUser(req, res) {
     try {
-        const user = await User.findOneAnddelete({_id: req.params.userId}, req.body);
+        const user = await User.findOneAndDelete({_id: req.params.userId}, req.body);
         await Thought.deleteMany({_id: {$in: user.thoughts}}) 
         res.json(user);
     }catch (err) {
