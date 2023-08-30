@@ -1,4 +1,4 @@
-const User = require('../../models/User');
+const { User } = require('../models/index');
 
 module.exports = {
 
@@ -61,7 +61,7 @@ async deleteUser(req, res) {
 //add friend
 async addFriend(req, res) {
     try {
-        const user = await User.findOneAndUpdate({_id: req.params.userId}, {$addToSet: {friends: req.params.friendId}});
+        const user = await User.findOneAndUpdate({_id: req.params.userId}, {$addToSet: {friends: req.params.friendId}}, { new: true });
         res.json(user);
     } catch (err) {
         res.status(500).json(err);
@@ -70,7 +70,7 @@ async addFriend(req, res) {
 //delete friend
 async deleteFriend(req, res) {
     try {
-        const user = await User.findOneAndUpdate({_id: req.params.userId}, {$pull: {friends: req.params.friendId}});
+        const user = await User.findOneAndUpdate({_id: req.params.userId}, {$pull: {friends: req.params.friendId}}, { new: true });
         res.json(user);
     } catch (err) {
         res.status(500).json(err);

@@ -7,11 +7,12 @@ const {
     deleteThought,
     addReaction,
     deleteReaction,
-} = require('../../controllers/api/thoughts');
+} = require('../../controllers/thoughtsController');
 
+// http://localhost:3001/api/thoughts/
+router.route('/').get(getThoughts).post(createThought);
 
-router.route('/thoughts').get(getThoughts).post(createThought);
-
+// http://localhost:3001/api/thoughts/thoughtsId38LDJLJSDLJDJ
 router
     .route('/:thoughtId')
     .get(getSingleThought)

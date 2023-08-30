@@ -1,4 +1,4 @@
-const Thoughts = require('../models/Thought');
+const { Thought } = require('../models/index.js');
 
 module.exports = {
 
@@ -25,7 +25,7 @@ module.exports = {
     // get thought by id
     async getSingleThought(req, res) {
         try {
-            const thought = await Thoughts.findOne({_id: req.params.thoughtId});
+            const thought = await Thought.findOne({_id: req.params.thoughtId});
 
             if(!thought) {
                 return this.res.status(404).json({ message: 'No thought with that ID'});
@@ -39,7 +39,7 @@ module.exports = {
     // update a thought
     async updateThought(req, res) {
         try {
-            const thought = await Thoughts.findOneAndUpdate({_id: req.params.thoughtId}, req.body);
+            const thought = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, req.body, { new: true });
 
             res.json(thought);
             } catch (err) {
@@ -50,7 +50,7 @@ module.exports = {
     // delete a thought
     async deleteThought(req, res) {
         try {
-            const thought = await Thoughts.findOneAndDelete({_id: req.params.thoughtId}, req.body);
+            const thought = await Thought.findOneAndDelete({_id: req.params.thoughtId}, req.body, { new: true });
             await reactionSchema.deleteMany({_id: {$in: thoughts.reaction}})
             res.json(thought);
         } catch (err) {
@@ -61,7 +61,7 @@ module.exports = {
     //create reaction to single thought
     async addReaction(req, res) {
         try {
-            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$addToSet: {reaction: req.params.reactionId}});
+            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$addToSet: {reaction: req.params.reactionId}}, { new: true });
             res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
@@ -71,7 +71,7 @@ module.exports = {
     //delete reaction
     async deleteReaction(req, res) {
         try {
-            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtsId}, {$pull: {reaction: req.params.reactionId}});
+            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtsId}, {$pull: {reaction: req.params.reactionId}}, { new: true });
             res.jason(thoughts);
         } catch (err) {
             res.status(500).json(err);
