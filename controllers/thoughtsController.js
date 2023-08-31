@@ -61,7 +61,8 @@ module.exports = {
     //create reaction to single thought
     async addReaction(req, res) {
         try {
-            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$addToSet: {reaction: req.params.reactionId}}, { new: true });
+            console.log(req.params);
+            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$addToSet: {reactions: req.body}}, { new: true });
             res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
@@ -71,10 +72,11 @@ module.exports = {
     //delete reaction
     async deleteReaction(req, res) {
         try {
-            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtsId}, {$pull: {reaction: req.params.reactionId}}, { new: true });
-            res.jason(thoughts);
+            console.log(req.params);
+            const thoughts = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$pull: {reactions: {reactionId: req.params.reactionId}}}, { new: true });
+            res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
         }
-    }
+    },
 };
