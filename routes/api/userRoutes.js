@@ -20,7 +20,7 @@ router
     .put(updateUser)
     .delete(deleteUser)
 
-    //http://localhost:3001/64eec73f12b094b731b9d0d6/friends/friendID998ujj
+    //http://localhost:3001/api/users/64eec73f12b094b731b9d0d6/friends/friendID998ujj
 router.route('/:userId/friends/:friendId')
 .post(addFriend)
 .delete(deleteFriend)
